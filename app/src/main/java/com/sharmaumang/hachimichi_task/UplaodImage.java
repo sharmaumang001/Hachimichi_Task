@@ -28,7 +28,7 @@ import java.io.IOException;
 
 
 
-public class MainActivity extends AppCompatActivity {
+class UploadImage extends AppCompatActivity {
 
 
     Button btnbrowse, btnupload;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnupload= findViewById(R.id.btnupload);
         txtdata = findViewById(R.id.txtdata);
         imgview = findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(UploadImage.this);
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
 
-            Toast.makeText(MainActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(UploadImage.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
 
         }
     }

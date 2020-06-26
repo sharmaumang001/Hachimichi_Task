@@ -1,6 +1,6 @@
 package com.sharmaumang.hachimichi_task;
 
-public class uploadinfo {
+class uploadinfo {
 
     public String imageName;
     public String imageURL;
