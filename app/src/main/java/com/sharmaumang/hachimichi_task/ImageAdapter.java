@@ -8,31 +8,35 @@ import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 public class ImageAdapter extends PagerAdapter {
     Context mContext;
+    private ArrayList<upload> mImageUrls;
 
-    ImageAdapter(Context context) {
+
+    ImageAdapter(Context context,ArrayList<upload> imageUrls) {
         this.mContext = context;
+        this.mImageUrls =imageUrls;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((android.widget.ImageView) object);
+        return view == object;
     }
-
-    private int[] sliderImageId = new int[]{
-
-//       R.drawable.image1, R.drawable.image2, R.drawable.image3
-
-    };
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        android.widget.ImageView imageView = new android.widget.ImageView(mContext);
-        imageView.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(sliderImageId[position]);
-        ((ViewPager) container).addView(imageView, 0);
+       ImageView imageView = new ImageView(mContext);
+        Picasso.get()
+                .load(String.valueOf(mImageUrls.get(position)))
+                .fit()
+                .centerCrop()
+                .into(imageView);
+        container.addView(imageView);
         return imageView;
     }
 
@@ -44,6 +48,6 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return sliderImageId.length;
+        return mImageUrls.size();
     }
 }
