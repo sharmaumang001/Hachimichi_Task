@@ -29,7 +29,7 @@ public class FirstActivity extends AppCompatActivity {
 
                 Toast.makeText(FirstActivity.this,"Task A",Toast.LENGTH_SHORT).show();
 
-                Intent mIntent = new Intent(FirstActivity.this,ImageUpload.class);
+                Intent mIntent = new Intent(FirstActivity.this,ImageView.class);
                 startActivity(mIntent);
 
 
