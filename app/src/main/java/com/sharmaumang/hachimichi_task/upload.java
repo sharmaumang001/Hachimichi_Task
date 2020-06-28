@@ -5,7 +5,7 @@ public class upload {
     private String mImageUrl;
 
     public upload() {
-        //empty constructor needed
+
     }
     public upload(String name, String imageUrl) {
         if (name.trim().equals("")) {

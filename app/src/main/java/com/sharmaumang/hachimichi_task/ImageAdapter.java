@@ -1,53 +1,64 @@
 package com.sharmaumang.hachimichi_task;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.text.style.IconMarginSpan;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
+import java.util.List;
 
-import java.util.ArrayList;
-
-public class ImageAdapter extends PagerAdapter {
-    Context mContext;
-    private ArrayList<upload> mImageUrls;
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+    private Context mContext;
+    private List<upload> mUploads;
 
 
-    ImageAdapter(Context context,ArrayList<upload> imageUrls) {
-        this.mContext = context;
-        this.mImageUrls =imageUrls;
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewName;
+        public ImageView imageView;
+        View mView;
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            mView=itemView;
+            textViewName = mView.findViewById(R.id.text_view_name);
+            imageView = mView.findViewById(R.id.image_view_upload);
+
+
+        }
+    }
+
+    public ImageAdapter(Context context, List<upload> uploads) {
+        mContext = context;
+        mUploads = uploads;
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
+        return new ImageViewHolder(v);
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-
-       ImageView imageView = new ImageView(mContext);
-        Picasso.get()
-                .load(String.valueOf(mImageUrls.get(position)))
-                .fit()
-                .centerCrop()
-                .into(imageView);
-        container.addView(imageView);
-        return imageView;
+    public void onBindViewHolder(ImageViewHolder holder, int position) {
+        upload uploadCurrent = mUploads.get(position);
+        holder.textViewName.setText(uploadCurrent.getName());
+        Glide.with(mContext)
+                .load(uploadCurrent.getImageUrl())
+                .into(holder.imageView);
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-
-        ((ViewPager) container).removeView((ImageView) object);
+    public int getItemCount() {
+        return mUploads.size();
     }
 
-    @Override
-    public int getCount() {
-        return mImageUrls.size();
-    }
+
 }

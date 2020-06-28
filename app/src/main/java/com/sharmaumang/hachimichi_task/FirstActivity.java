@@ -42,7 +42,9 @@ public class FirstActivity extends AppCompatActivity {
 
                 Toast.makeText(FirstActivity.this,"Task B",Toast.LENGTH_SHORT).show();
 
-                Log.w("FirstActivity.this","Second Selected");
+                Intent mIntent = new Intent(FirstActivity.this,SensorActivity.class);
+                startActivity(mIntent);
+
 
             }
         });
