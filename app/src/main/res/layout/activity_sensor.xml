@@ -1,19 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
-    tools:context=".SensorActivity">
+    android:weightSum="15">
 
 
-    <TextView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="14"
+        android:layout_marginHorizontal="15dp">
+
+
+        <TextView
+            android:id="@+id/sensor_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginVertical="25dp"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:text="@string/placeholder_text"/>
+
+<!--        <TableRow-->
+<!--            android:id="@+id/hr"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="#444"/>-->
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/listenerBtn_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_weight="1"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_button"
+        android:layout_marginHorizontal="35dp"
+        android:text="sensor Listeners"
+        android:textColor="#000"
+        android:textStyle="bold"
         />
+
 
 
 </LinearLayout>

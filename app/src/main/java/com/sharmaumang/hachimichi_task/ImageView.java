@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -29,14 +30,21 @@ import java.util.ArrayList;
 
 public class ImageView extends AppCompatActivity {
 
-    ViewFlipper mViewFlipper;
-    ImageView mImageView1, mImageView2, mImageView3;
-    TextView mTextView1, mTextView2, mTextView3;
+
+    RecyclerView mRecyclerView;
+
+    ImageAdapter mImageAdapter;
+
     Button mUploadNew;
+
 
 
     StorageReference mFirebaseStorage;
     DatabaseReference mDatabaseReference;
+
+
+    public ArrayList<upload> mImageUrls;
+
 
 
     @Override
@@ -45,22 +53,17 @@ public class ImageView extends AppCompatActivity {
         setContentView(R.layout.activity_image_view);
 
         mUploadNew = findViewById(R.id.upload_new);
-        mViewFlipper =findViewById(R.id.viewFlipper_ID);
-
-
-//        mImageView1 = (ImageView) findViewById(R.id.image_view1);
-
-
-        mTextView1 =findViewById(R.id.textView1);
-        mTextView2 =findViewById(R.id.textView2);
-        mTextView3 = findViewById(R.id.textView3);
-
-        mImageView1 = (ImageView) findViewById(R.id.image_view1);
-        mImageView2 = (ImageView) findViewById(R.id.image_view2);
-        mImageView3 = (ImageView) findViewById(R.id.image_view3);
 
 
 
+
+        mRecyclerView = findViewById(R.id.recycler_ID);
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        //Button working
 
         mUploadNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,22 +74,67 @@ public class ImageView extends AppCompatActivity {
         });
 
 
+                                          //Auto Recycler view scroll
+
+//
+//        final int speedScroll = 1200;
+//        final Handler handler = new Handler();
+//
+//        Runnable runnable = new Runnable() {
+//
+//            ImageAdapter mImageAdapter = new ImageAdapter(ImageView.this,mImageUrls);
+//            int count = 0;
+//            boolean flag = true;
+//
+//            @Override
+//            public void run() {
+//
+//                if (count < mImageAdapter.getItemCount()) {
+//
+//                    if (count == (mImageAdapter.getItemCount() - 1)) {
+//                        flag = false;
+//                    }else if(count == 0) {
+//                        flag = true;
+//                    }
+//
+//                    if (flag) count++;
+//                    else count--;
+//
+//                    mRecyclerView.smoothScrollToPosition(count);
+//                    handler.postDelayed(this, speedScroll);
+//                }
+//            }
+//        };
+//
+//        handler.postDelayed(runnable,speedScroll);
+
+        mImageUrls= new ArrayList<>();
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("Images/");
         mFirebaseStorage = FirebaseStorage.getInstance().getReference("Images/");
 
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                mImageUrls.clear();
+
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+
                     upload upload = postSnapshot.getValue(upload.class);
+                    mImageUrls.add(upload);
+
                     String Url = upload.getImageUrl();
                     String name = upload.getName();
 
-                    Picasso.get().load(Url).into((Target) mImageView1);
-
                 }
+
+                mImageAdapter = new ImageAdapter(ImageView.this,mImageUrls);
+                mRecyclerView.setAdapter(mImageAdapter);
 
             }
 

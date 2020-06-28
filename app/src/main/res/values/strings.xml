@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Hachimichi_Task</string>
+    <string name="placeholder_text">(placeholder)</string>
+
+    <string name="label_proximity">Proximity Sensor: %1$.2f</string>
+    <string name="label_light">Light Sensor: %1$.2f</string>
+
+    <string name="error_no_sensor">No sensor</string>
 </resources>
